@@ -121,7 +121,8 @@ export default {
     },
     setLayerVisibility (layer, group, visible) {
       if (group?.mutually_exclusive) {
-        const offLayers = group.layers.filter(l => l.visible && l !== layer)
+        // const offLayers = group.layers.filter(l => l.visible && l !== layer)
+        const offLayers = this.$store.state.project.overlays.list.filter(l => l.visible && !l.hidden && l !== layer)
         offLayers.forEach(l => this.$store.commit('layerVisibility', { layer: l, visible: false }))
       }
       this.$store.commit('layerVisibility', { layer, visible })

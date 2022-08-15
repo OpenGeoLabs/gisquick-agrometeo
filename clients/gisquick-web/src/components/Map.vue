@@ -25,6 +25,7 @@
     </div>
     <portal-target name="map-overlay" class="map-overlay"/>
     <tools-menu :tools="toolsMenuItems" color="dark"/>
+    <legend-panel/>
     <transition name="fade">
       <div v-if="status.overlays.loading || status.baseLayer.loading" class="status f-row-ac m-2">
         <v-spinner width="2" size="18"/>
@@ -85,14 +86,15 @@ import MapAttributions from '@/components/MapAttributions.vue'
 import ToolsMenu from '@/components/ToolsMenu.vue'
 import MapControl from '@/components/MapControl.vue'
 import ScaleLine from '@/components/ol/ScaleLine.vue'
-import MapTools from '@/components/MapTools.vue'
+import MapTools from '@/components/MapToolsCustom.vue'
+import LegendPanel from '@/components/LegendPanel.vue'
 import AppMenu from '@/components/AppMenu.vue'
 
 export default {
   name: 'Map',
   mixins: [Map],
   components: {
-    ContentPanel, BottomToolbar, ScaleLine, MapAttributions, ToolsMenu, MapControl, MapTools, AppMenu
+    ContentPanel, BottomToolbar, ScaleLine, MapAttributions, ToolsMenu, MapControl, MapTools, AppMenu, LegendPanel
   },
   refs: ['tools'],
   data () {
@@ -226,7 +228,9 @@ export default {
   .panel-toggle {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    align-self: center;
+    align-self: start;
+    bottom: 50px;
+    top: 78px;
     z-index: 1;
   }
   .map-control {

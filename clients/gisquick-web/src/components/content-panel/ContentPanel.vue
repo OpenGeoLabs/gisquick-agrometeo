@@ -1,9 +1,24 @@
 <template>
   <div class="content-panel light">
     <div class="panel-header f-row-ac f-justify-center">
-      <translate class="title">Content</translate>
+      <translate class="title">Layers</translate>
     </div>
-    <v-tabs-header :items="tabsItems" v-model="activeMainTab"/>
+    <div class="f-col f-grow">
+      <overlays-opacity
+        class="opacity-tool my-2"
+        @touchstart.native.stop=""
+        @touchend.native.stop=""
+      />
+      <scroll-area>
+        <layers-tree
+          class="light"
+          :attribute-table-disabled="attributeTableDisabled"
+          :layers="project.overlays.tree"
+          :expanded.sync="expandedOverlays"
+        />
+      </scroll-area>
+    </div>
+    <!-- <v-tabs-header :items="tabsItems" v-model="activeMainTab"/>
     <v-tabs class="f-grow" :items="tabsItems" v-model="activeMainTab">
       <template v-slot:base>
         <scroll-area>
@@ -56,7 +71,7 @@
           <map-legend :visible="visible"/>
         </scroll-area>
       </template>
-    </v-tabs>
+    </v-tabs> -->
   </div>
 </template>
 
