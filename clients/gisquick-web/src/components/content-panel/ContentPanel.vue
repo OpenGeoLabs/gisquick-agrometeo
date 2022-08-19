@@ -59,7 +59,7 @@
               <layers-tree
                 class="light"
                 :attribute-table-disabled="attributeTableDisabled"
-                :layers="project.overlays.tree"
+                :layers="project.overlays"
                 :expanded.sync="expandedOverlays"
               />
             </scroll-area>
