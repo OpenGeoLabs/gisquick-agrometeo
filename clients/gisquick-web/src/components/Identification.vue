@@ -134,6 +134,10 @@ export default {
   computed: {
     ...mapState(['project']),
     queryableLayers () {
+      const agrometeoLayer = this.project.overlays.list.find(l => l.name === 'CLSMAXI_TEMPERAT_today')
+      if (agrometeoLayer) {
+        return [agrometeoLayer]
+      }
       return this.project.overlays.list.filter(l => l.queryable && l.visible && !l.hidden)
     },
     options () {
