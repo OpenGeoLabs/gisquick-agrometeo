@@ -13,6 +13,23 @@
         </v-btn>
       </template>
     </app-menu>
+    <div class="auth-status">
+      <div v-if="!user.is_guest" class="signed f-row-ac">
+        <v-tooltip>
+          <div class="f-col text-center px-2">
+            <span v-text="user.username"/>
+            <template v-if="user.first_name || user.last_name">
+              <hr/>
+              <span>{{ user.first_name }} {{ user.last_name}}</span>
+            </template>
+          </div>
+        </v-tooltip>
+        <v-icon name="account" size="28" color="dark" class="shadow-2"/>
+      </div>
+      <!-- <div v-else class="guest f-row-ac">
+        <v-icon name="login" size="25"/>
+      </div> -->
+    </div>
 
     <!-- <collapse-transition class="status-bar"> -->
       <bottom-toolbar v-if="statusBarVisible" class="status-bar"/>
@@ -104,7 +121,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['activeTool']),
+    ...mapState(['user']),
     toolsMenuItems () {
       const tools = (this.$refs.tools && this.$refs.tools.items) || []
       return tools.filter(t => !t.disabled)
@@ -184,7 +201,7 @@ export default {
     // justify-items: center;
     min-height: 0;
     max-height: 100%;
-    margin: 0.5em 3.25em 0 0;
+    margin: 6px 44px 0 0;
     pointer-events: none;
     > * {
       pointer-events: auto;
@@ -244,9 +261,9 @@ export default {
   }
   .app-menu {
     grid-column: 3 / 4;
-     grid-row: 1 / 2;
-     align-self: start;
-     justify-self: end;
+    grid-row: 1 / 2;
+    align-self: start;
+    justify-self: end;
   }
   .right-panel {
     // grid-column: 3 / 4;
@@ -296,6 +313,24 @@ export default {
     color: #fff;
     border-radius: 4px;
     padding: 2px 4px;
+  }
+  .auth-status {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    align-self: start;
+    justify-self: end;
+    z-index: 1;
+    top: 8px;
+    right: 48px;
+    .guest {
+      margin: 2px;
+    }
+    .signed {
+      .icon {
+        background-color: #fff;
+        border-radius: 50%;
+      }
+    }
   }
 }
 
