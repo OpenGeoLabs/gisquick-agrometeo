@@ -1,24 +1,10 @@
 <template>
   <div class="content-panel light">
     <div class="panel-header f-row-ac f-justify-center">
-      <translate class="title">Layers</translate>
+      <translate v-if="isMobileLayout" class="title">Content</translate>
+      <translate v-else class="title">Layers</translate>
     </div>
-    <div class="f-col f-grow">
-      <overlays-opacity
-        class="opacity-tool my-2"
-        @touchstart.native.stop=""
-        @touchend.native.stop=""
-      />
-      <scroll-area>
-        <layers-tree
-          class="light"
-          :attribute-table-disabled="attributeTableDisabled"
-          :layers="project.overlays"
-          :expanded.sync="expandedOverlays"
-        />
-      </scroll-area>
-    </div>
-    <!-- <v-tabs-header :items="tabsItems" v-model="activeMainTab"/>
+    <v-tabs-header v-if="tabsItems.length > 1" :items="tabsItems" v-model="activeMainTab"/>
     <v-tabs class="f-grow" :items="tabsItems" v-model="activeMainTab">
       <template v-slot:base>
         <scroll-area>
@@ -71,7 +57,7 @@
           <map-legend :visible="visible"/>
         </scroll-area>
       </template>
-    </v-tabs> -->
+    </v-tabs>
   </div>
 </template>
 
@@ -117,11 +103,14 @@ export default {
     hasBaseLayers () {
       return this.project.baseLayers.list.length > 0
     },
+    isMobileLayout () {
+      return window.env.mobile
+    },
     tabsItems () {
       return [
-        this.hasBaseLayers && { key: 'base', icon: 'base-layer', label: this.$gettext('Base Layers') },
+        // this.hasBaseLayers && { key: 'base', icon: 'base-layer', label: this.$gettext('Base Layers') },
         { key: 'overlays', icon: 'overlays', label: this.$gettext('Overlay Layers') },
-        { key: 'legend', icon: 'legend', label: this.$gettext('Legend') }
+        this.isMobileLayout && { key: 'legend', icon: 'legend', label: this.$gettext('Legend') }
       ].filter(i => i)
     },
     overlaysTabs () {
